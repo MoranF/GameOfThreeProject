@@ -1,0 +1,39 @@
+<!doctype html>
+
+<html lang="en" ng-app="gameOfThreeApp">
+	<head>
+		<meta charset="utf-8">
+		<title>Game of three</title>
+		<link rel="stylesheet" href="style.css">
+
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+		<script src="app.js"></script>
+		<script src="playerService.js"></script>
+		<script src="gameService.js"></script>
+		<script src="serverRequestsService.js"></script>
+		<script src="gameOfThreeController.js"></script>
+	</head>
+
+	<body ng-controller="gameOfThreeController as ctrl">
+		<div ng-hide="ctrl.game.ended">
+			<div class="number">{{ctrl.game.number}}</div>
+			<button class="start-btn" ng-hide="ctrl.game.started" ng-click="ctrl.startGame()">
+				Start Game
+			</button>
+			<div class="text" ng-show="!ctrl.player.myTurn && ctrl.game.started">
+				Waiting for player 2 to act
+			</div>
+			<div ng-show="ctrl.game.started && ctrl.player.myTurn">
+				<div class="text">Choose an action:</div>
+				<button class="send-btn" ng-click="ctrl.sendNumber(ctrl.game.number + 1)">+1</button>
+				<button class="send-btn" ng-click="ctrl.sendNumber(ctrl.game.number)">+0</button>
+				<button class="send-btn" ng-click="ctrl.sendNumber(ctrl.game.number - 1)">-1</button>
+				<div class="text wrong-action" ng-show="ctrl.wrongNumberChosen">
+					Choose other action. The number is not devided by 3.
+				</div>
+			</div>
+		</div>
+			
+		<div class="won" ng-show="ctrl.game.ended">You won!</div>
+	</body>
+</html>
